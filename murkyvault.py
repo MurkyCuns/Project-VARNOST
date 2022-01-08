@@ -1,10 +1,17 @@
 import mysql.connector
 import base64
 from prettytable import PrettyTable
+import getpass
+import os
+
+clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+
+clearConsole()
+
 
 print("Bienvenido al gestor de contraseñas de MurkyCuns. El MurkyVault 1.0")
 MasterPassword = "passwd"
-checkMasterPassword = input("Porfavor, introduzca la clave maestra para entrar al gestor de contraseñas: ")
+checkMasterPassword = getpass.getpass("Porfavor, introduzca la clave maestra para entrar al gestor de contraseñas: ")
 
 printTable = PrettyTable()
 
@@ -61,7 +68,7 @@ if (MasterPassword == checkMasterPassword):
 	MurkyDB = input("Introduzca el nombre de la Base de Datos: ")
 	MurkyDBHost = input("Introduzca el nombre del Host de la Base de Datos: ")
 	MurkyDBUsername = input("Introduzca el nombre de Usuario de la Base de Datos: ")
-	MurkyDBPassword = input("Introduzca la contraseña de la Base de Datos: ")
+	MurkyDBPassword = getpass.getpass("Introduzca la contraseña de la Base de Datos: ")
 
 	# Conexión a la Base de Datos.
 	MurkyDBConnection = mysql.connector.connect(
@@ -81,7 +88,7 @@ if (MasterPassword == checkMasterPassword):
 		newPlace = input("Introduzca el sitio web o aplicación al que desee añadir una contraseña: ")
 		newEmail = input("Introduzca el email para asociar con este sitio web o aplicación: ")
 		newUsername = input("Introduzca el nombre de usuario para asociar con este sitio web o aplicación: ")
-		newPassword = input("Introduzca la nueva contraseña para este sitio web o aplicación: ")
+		newPassword = getpass.getpass("Introduzca la nueva contraseña para este sitio web o aplicación: ")
 
 		if (newPlace and newEmail and newUsername and newPassword):
 			print()
@@ -104,12 +111,14 @@ if (MasterPassword == checkMasterPassword):
 			anotherTry = input("Quieres introducir una nueva contraseña para un Sitio Web o una Aplicación?	Si / No: ")
 
 			if (anotherTry == "Si" or anotherTry == "si"):
+				clearConsole()
 				showSelectedMenu("a")
 
 			elif (anotherTry == "No" or anotherTry == "no"):
 				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
 
 				if (anotherOption == "Si" or anotherOption == "si"):
+					clearConsole()
 					showMenu()
 
 				else:
@@ -145,6 +154,7 @@ if (MasterPassword == checkMasterPassword):
 			anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
 
 			if (anotherOption == "Si" or anotherOption == "si"):
+				clearConsole()
 				showMenu()
 
 			else:
@@ -186,13 +196,14 @@ if (MasterPassword == checkMasterPassword):
 				anotherTry = input("Quieres consultar las contraseñas de otro Sitio Web o Aplicación?	Si / No: ")
 
 				if (anotherTry == "Si" or anotherTry == "si"):
-					print(customPlace)
+					clearConsole()
 					showSelectedMenu("c")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
 
 					if (anotherOption == "Si" or anotherOption == "si"):
+						clearConsole()
 						showMenu()
 
 					else:
@@ -237,12 +248,14 @@ if (MasterPassword == checkMasterPassword):
 				anotherTry = input("Quieres consultar las contraseñas asociadas a otra cuenta de Correo Electrónico?	Si / No: ")
 
 				if (anotherTry == "Si" or anotherTry == "si"):
+					clearConsole()
 					showSelectedMenu("d")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
 
 					if (anotherOption == "Si" or anotherOption == "si"):
+						clearConsole()
 						showMenu()
 
 					else:
@@ -287,15 +300,18 @@ if (MasterPassword == checkMasterPassword):
 				anotherTry = input("Quieres consultar las contraseñas asociadas a otro Nombre de Usuario?	Si / No: ")
 
 				if (anotherTry == "Si" or anotherTry == "si"):
+					clearConsole()
 					showSelectedMenu("e")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
 
 					if (anotherOption == "Si" or anotherOption == "si"):
+						clearConsole()
 						showMenu()
 
 					else:
+						clearConsole()
 						showSelectedMenu("f")
 
 			else:
@@ -316,31 +332,37 @@ if (MasterPassword == checkMasterPassword):
 			while True:
 
 				print("""
-					   a) Ingresar una nueva contraseña.
-					   b) Consultar todas las contraseñas existentes en la Base de Datos.
-					   c) Consultar la contraseña de un sitio web o aplicación.
-					   d) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
-					   e) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
-					   f) Salir
+a) Ingresar una nueva contraseña.
+b) Consultar todas las contraseñas existentes en la Base de Datos.
+c) Consultar la contraseña de un sitio web o aplicación.
+d) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
+e) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
+f) Salir
 					   """)
 
 				option = input("Escoja la opción que desee utilizar: ")
 
 				if (option == "a" or option == "A"):
+					clearConsole()
 					addPassword()
 				if (option == "b" or option == "B"):
+					clearConsole()
 					showAllPasswords()
 				if (option == "c" or option == "C"):
+					clearConsole()
 					showRelatedToSite()
 				if (option == "d" or option == "D"):
+					clearConsole()
 					showRelatedToEmail()
 				if (option == "e" or option == "E"):
+					clearConsole()
 					showRelatedToUsername()
 				if (option == "f" or option == "F"):
+					clearConsole()
 					print()
 					print("Gracias por utilizar MurkyVault!")
 					print()
-					break
+					exit()
 				if (option != ""):
 					print()
 					print("No se ha elegido ninguna opción correcta. Seleccione una opción de las mostradas en el menú.")
@@ -354,4 +376,3 @@ else:
 	print()
 	print("Contraseña incorrecta...")
 	exit()
-
