@@ -11,7 +11,8 @@ clearConsole()
 
 print("Bienvenido al gestor de contraseñas de MurkyCuns. El MurkyVault 1.0")
 MasterPassword = "passwd"
-checkMasterPassword = getpass.getpass("Porfavor, introduzca la clave maestra para entrar al gestor de contraseñas: ")
+# checkMasterPassword = getpass.getpass("Porfavor, introduzca la clave maestra para entrar al gestor de contraseñas: ")
+checkMasterPassword = "passwd"
 
 printTable = PrettyTable()
 
@@ -34,6 +35,8 @@ def showSelectedMenu(option):
 		if (option == "e" or option == "E"):
 			showRelatedToUsername()
 		if (option == "f" or option == "F"):
+			deleteRow()
+		if (option == "g" or option == "G"):
 			print()
 			print("Gracias por utilizar MurkyVault!")
 			print()
@@ -122,7 +125,7 @@ if (MasterPassword == checkMasterPassword):
 					showMenu()
 
 				else:
-					showSelectedMenu("f")
+					showSelectedMenu("g")
 
 		else:
 			print()
@@ -158,7 +161,7 @@ if (MasterPassword == checkMasterPassword):
 				showMenu()
 
 			else:
-				showSelectedMenu("f")
+				showSelectedMenu("g")
 
 		else:
 			print()
@@ -207,7 +210,7 @@ if (MasterPassword == checkMasterPassword):
 						showMenu()
 
 					else:
-						showSelectedMenu("f")
+						showSelectedMenu("g")
 
 			else:
 				print()
@@ -259,7 +262,7 @@ if (MasterPassword == checkMasterPassword):
 						showMenu()
 
 					else:
-						showSelectedMenu("f")
+						showSelectedMenu("g")
 
 			else:
 				print()
@@ -312,7 +315,7 @@ if (MasterPassword == checkMasterPassword):
 
 					else:
 						clearConsole()
-						showSelectedMenu("f")
+						showSelectedMenu("g")
 
 			else:
 				print()
@@ -321,6 +324,85 @@ if (MasterPassword == checkMasterPassword):
 		else:
 			print()
 			print("No se han introducido todos los parámetros, no se admiten entradas vacías...")
+
+	def deleteRow():
+		print()
+		print("Ha elegido la opción 6. Eliminar una contraseña de un sitio Web o Aplicación")
+		print()
+
+		customPlace = input("¿De qué Sitio Web o Aplicación quieres eliminar la contraseña? ")
+
+		if (customPlace):
+			showTable = "SELECT * FROM murkypasswords WHERE Site = %s"
+			dbcursor.execute(showTable, (customPlace,))
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+				print("El Sitio Web o Aplicación de nombre: '" + customPlace + "' contiene los siguientes campos: ")
+				print()
+
+				printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+
+				for fila in resultado:
+
+					decodingRow(fila[3])
+
+					printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				confirmDelete = input("Estás seguro de que quieres eliminar esta fila de la tabla de contraseñas?	Si / No: ")
+
+				if (confirmDelete == "Si" or confirmDelete == "si"):
+					deleteQuery = "DELETE FROM murkypasswords WHERE Site = %s"
+					dbcursor.execute(deleteQuery, (customPlace,))
+					MurkyDBConnection.commit()
+
+					print()
+					print("La contraseña del Sitio Web o Aplicación: '" + customPlace + "', se ha eliminado correctamente.")
+					print()
+
+					anotherTry = input("Quieres eliminar la contraseña de otro Sitio Web o Aplicación?	Si / No: ")
+
+					if (anotherTry == "Si" or anotherTry == "si"):
+						clearConsole()
+						showSelectedMenu("f")
+
+					elif (anotherTry == "No" or anotherTry == "no"):
+						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+						if (anotherOption == "Si" or anotherOption == "si"):
+							clearConsole()
+							showMenu()
+
+						else:
+							clearConsole()
+							showSelectedMenu("g")
+				else:
+					anotherTry = input("Quieres eliminar la contraseña de otro Sitio Web o Aplicación?	Si / No: ")
+
+					if (anotherTry == "Si" or anotherTry == "si"):
+						clearConsole()
+						showSelectedMenu("f")
+
+					elif (anotherTry == "No" or anotherTry == "no"):
+						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+						if (anotherOption == "Si" or anotherOption == "si"):
+							clearConsole()
+							showMenu()
+
+						else:
+							clearConsole()
+							showSelectedMenu("g")
+
+			
 
 	# Mensaje al usuario
 	if (MurkyDBConnection):
@@ -332,12 +414,22 @@ if (MasterPassword == checkMasterPassword):
 			while True:
 
 				print("""
+-----------------------------------------------------------------------------------
+OPCIONES DE CONSULTA DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
+-----------------------------------------------------------------------------------
+
 a) Ingresar una nueva contraseña.
 b) Consultar todas las contraseñas existentes en la Base de Datos.
 c) Consultar la contraseña de un sitio web o aplicación.
 d) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
 e) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
-f) Salir
+
+-----------------------------------------------------------------------------------
+OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
+-----------------------------------------------------------------------------------
+f) Eliminar la contraseña de un Sitio Web o Aplicación.
+
+g) Salir
 					   """)
 
 				option = input("Escoja la opción que desee utilizar: ")
@@ -359,6 +451,9 @@ f) Salir
 					showRelatedToUsername()
 				if (option == "f" or option == "F"):
 					clearConsole()
+					deleteRow()
+				if (option == "g" or option == "G"):
+					clearConsole()
 					print()
 					print("Gracias por utilizar MurkyVault!")
 					print()
@@ -366,6 +461,7 @@ f) Salir
 				if (option != ""):
 					print()
 					print("No se ha elegido ninguna opción correcta. Seleccione una opción de las mostradas en el menú.")
+					print()
 
 		showMenu()				
 		
