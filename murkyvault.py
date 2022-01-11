@@ -24,19 +24,21 @@ def showSelectedMenu(option):
 		else:
 			option = input("Escoja la opción que desee utilizar: ")
 
-		if (option == "a" or option == "A"):
+		if (option == "1"):
 			addPassword()
-		if (option == "b" or option == "B"):
+		if (option == "2"):
 			showAllPasswords()
-		if (option == "c" or option == "C"):
+		if (option == "3"):
 			showRelatedToSite()
-		if (option == "d" or option == "D"):
+		if (option == "4"):
 			showRelatedToEmail()
-		if (option == "e" or option == "E"):
+		if (option == "5"):
 			showRelatedToUsername()
-		if (option == "f" or option == "F"):
+		if (option == "6"):
 			deleteRow()
-		if (option == "g" or option == "G"):
+		if (option == "7"):
+			modifyRow()
+		if (option == "0"):
 			print()
 			print("Gracias por utilizar MurkyVault!")
 			print()
@@ -78,7 +80,7 @@ if (MasterPassword == checkMasterPassword):
 										user=MurkyDBUsername,
 										password=MurkyDBPassword,
 										host=MurkyDBHost,
-										database=MurkyDB,
+										database=MurkyDB,									
 										)
 
 	dbcursor = MurkyDBConnection.cursor()
@@ -115,7 +117,7 @@ if (MasterPassword == checkMasterPassword):
 
 			if (anotherTry == "Si" or anotherTry == "si"):
 				clearConsole()
-				showSelectedMenu("a")
+				showSelectedMenu("1")
 
 			elif (anotherTry == "No" or anotherTry == "no"):
 				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -125,7 +127,7 @@ if (MasterPassword == checkMasterPassword):
 					showMenu()
 
 				else:
-					showSelectedMenu("g")
+					showSelectedMenu("0")
 
 		else:
 			print()
@@ -161,7 +163,7 @@ if (MasterPassword == checkMasterPassword):
 				showMenu()
 
 			else:
-				showSelectedMenu("g")
+				showSelectedMenu("0")
 
 		else:
 			print()
@@ -200,7 +202,7 @@ if (MasterPassword == checkMasterPassword):
 
 				if (anotherTry == "Si" or anotherTry == "si"):
 					clearConsole()
-					showSelectedMenu("c")
+					showSelectedMenu("3")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -210,7 +212,7 @@ if (MasterPassword == checkMasterPassword):
 						showMenu()
 
 					else:
-						showSelectedMenu("g")
+						showSelectedMenu("0")
 
 			else:
 				print()
@@ -252,7 +254,7 @@ if (MasterPassword == checkMasterPassword):
 
 				if (anotherTry == "Si" or anotherTry == "si"):
 					clearConsole()
-					showSelectedMenu("d")
+					showSelectedMenu("4")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -262,7 +264,7 @@ if (MasterPassword == checkMasterPassword):
 						showMenu()
 
 					else:
-						showSelectedMenu("g")
+						showSelectedMenu("0")
 
 			else:
 				print()
@@ -304,7 +306,7 @@ if (MasterPassword == checkMasterPassword):
 
 				if (anotherTry == "Si" or anotherTry == "si"):
 					clearConsole()
-					showSelectedMenu("e")
+					showSelectedMenu("5")
 
 				elif (anotherTry == "No" or anotherTry == "no"):
 					anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -315,7 +317,7 @@ if (MasterPassword == checkMasterPassword):
 
 					else:
 						clearConsole()
-						showSelectedMenu("g")
+						showSelectedMenu("0")
 
 			else:
 				print()
@@ -372,7 +374,7 @@ if (MasterPassword == checkMasterPassword):
 
 					if (anotherTry == "Si" or anotherTry == "si"):
 						clearConsole()
-						showSelectedMenu("f")
+						showSelectedMenu("6")
 
 					elif (anotherTry == "No" or anotherTry == "no"):
 						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -383,7 +385,98 @@ if (MasterPassword == checkMasterPassword):
 
 						else:
 							clearConsole()
-							showSelectedMenu("g")
+							showSelectedMenu("0")
+				else:
+					anotherTry = input("Quieres eliminar la contraseña de otro Sitio Web o Aplicación?	Si / No: ")
+
+					if (anotherTry == "Si" or anotherTry == "si"):
+						clearConsole()
+						showSelectedMenu("6")
+
+					elif (anotherTry == "No" or anotherTry == "no"):
+						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+						if (anotherOption == "Si" or anotherOption == "si"):
+							clearConsole()
+							showMenu()
+
+						else:
+							clearConsole()
+							showSelectedMenu("0")
+
+	def modifyRow():
+		print()
+		print("Ha elegido la opción 6. Modificar el registro de un sitio Web o Aplicación")
+		print()
+
+		customPlace = input("¿De qué Sitio Web o Aplicación quieres modificar el registro? ")
+
+		if (customPlace):
+			showTable = "SELECT * FROM murkypasswords WHERE Site = %s"
+			dbcursor.execute(showTable, (customPlace,))
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+				print("El Sitio Web o Aplicación de nombre: '" + customPlace + "' contiene los siguientes campos: ")
+				print()
+
+				printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+
+				for fila in resultado:
+
+					decodingRow(fila[3])
+
+					printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				confirmDelete = input("Estás seguro de que quieres modificar este registro de la tabla de contraseñas?	Si / No: ")
+
+				if (confirmDelete == "Si" or confirmDelete == "si"):
+
+					print()
+					print("Introduzca nuevos valores para los siguientes campos del registro del Sitio Web o Aplicación: '" + customPlace)
+					print()
+
+					newPlace = input("Sitio Web o Aplicación: ")
+					newEmail = input("Correo Electrónico: ")
+					newUsername = input("Nombre de Usuario: ")
+					newPassword = getpass.getpass("Contraseña: ")
+
+					encodingPassword(newPassword)
+
+					modifyQuery = ("UPDATE murkypasswords SET Site = %s, Email = %s, Username = %s, Passwd = %s WHERE Site = %s", (newPlace, newEmail, newUsername, encodingPassword.variable, customPlace))
+			
+					# Ejecución y comprobación de que los valores hayan entrado a la DB.
+					dbcursor.execute( * modifyQuery)
+					MurkyDBConnection.commit()
+
+					print()
+					print("El registro del Sitio Web o Aplicación: '" + customPlace + "', se ha modificado correctamente.")
+					print()
+
+					anotherTry = input("Quieres modificar el registro de otro Sitio Web o Aplicación?	Si / No: ")
+
+					if (anotherTry == "Si" or anotherTry == "si"):
+						clearConsole()
+						showSelectedMenu("7")
+
+					elif (anotherTry == "No" or anotherTry == "no"):
+						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+						if (anotherOption == "Si" or anotherOption == "si"):
+							clearConsole()
+							showMenu()
+
+						else:
+							clearConsole()
+							showSelectedMenu("0")
 				else:
 					anotherTry = input("Quieres eliminar la contraseña de otro Sitio Web o Aplicación?	Si / No: ")
 
@@ -400,59 +493,60 @@ if (MasterPassword == checkMasterPassword):
 
 						else:
 							clearConsole()
-							showSelectedMenu("g")
+							showSelectedMenu("0")
 
 			
 
 	# Mensaje al usuario
 	if (MurkyDBConnection):
-		print()
-		print("Se ha conectado correctamente a la Base de Datos!")
-		print("")
+		clearConsole()
 
 		def showMenu():
 			while True:
-
 				print("""
 -----------------------------------------------------------------------------------
 OPCIONES DE CONSULTA DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
 -----------------------------------------------------------------------------------
 
-a) Ingresar una nueva contraseña.
-b) Consultar todas las contraseñas existentes en la Base de Datos.
-c) Consultar la contraseña de un sitio web o aplicación.
-d) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
-e) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
+1) Ingresar una nueva contraseña.
+2) Consultar todas las contraseñas existentes en la Base de Datos.
+3) Consultar la contraseña de un Sitio web o Aplicación.
+4) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
+5) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
 
 -----------------------------------------------------------------------------------
 OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
 -----------------------------------------------------------------------------------
-f) Eliminar la contraseña de un Sitio Web o Aplicación.
+6) Eliminar la contraseña de un Sitio Web o Aplicación.
+7) Modificar el registro de un Sitio Web o Aplicación.
 
-g) Salir
+0) Salir
 					   """)
 
 				option = input("Escoja la opción que desee utilizar: ")
 
-				if (option == "a" or option == "A"):
+				if (option == "1"):
 					clearConsole()
 					addPassword()
-				if (option == "b" or option == "B"):
+				if (option == "2"):
 					clearConsole()
 					showAllPasswords()
-				if (option == "c" or option == "C"):
+				if (option == "3"):
 					clearConsole()
 					showRelatedToSite()
-				if (option == "d" or option == "D"):
+				if (option == "4"):
 					clearConsole()
 					showRelatedToEmail()
-				if (option == "e" or option == "E"):
+				if (option == "5"):
 					clearConsole()
 					showRelatedToUsername()
-				if (option == "f" or option == "F"):
+				if (option == "6"):
 					clearConsole()
 					deleteRow()
-				if (option == "g" or option == "G"):
+				if (option == "7"):
+					clearConsole()
+					modifyRow()
+				if (option == "0"):
 					clearConsole()
 					print()
 					print("Gracias por utilizar MurkyVault!")
