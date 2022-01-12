@@ -68,6 +68,8 @@ if MurkyDBConnection:
 
 	for masterPasswordRow in Masterresultado:
 		pass
+
+	printTable = PrettyTable()
 	
 	# Definición de un Menú alternativo utilizado para realizar acciones secundarias después de la primera seleccionada en el Menú Principal:
 	def showSelectedMenu(option):
