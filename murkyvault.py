@@ -35,9 +35,29 @@ dbcursor = MurkyDBConnection.cursor()
 clearConsole
 
 if MurkyDBConnection:
+
+	createMasterPassTable = "CREATE TABLE IF NOT EXISTS masterpass (masterpass varchar(255))"
+	dbcursor.execute(createMasterPassTable)
+
+	createStoreTable = "CREATE TABLE IF NOT EXISTS murkypasswords (Site varchar(255), Email varchar(255), Username varchar(255), Passwd varchar(255))"
+	dbcursor.execute(createStoreTable)
+
+	checkMasterPass = "SELECT * FROM masterpass"
+	dbcursor.execute(checkMasterPass)
+	checkMasterPassResult = dbcursor.fetchone()
+
+	if not checkMasterPassResult:
+		insertMasterPassQuery = "INSERT INTO masterpass (masterpass) VALUES (%s)"
+		insertMasterPass = getpass.getpass("No se ha introducido ningunha clave maestra. Por favor, introduce una a continuación: ")
+		masterPassToInsert = (insertMasterPass,)
+		dbcursor.execute(insertMasterPassQuery, masterPassToInsert)
+		MurkyDBConnection.commit()
+
+	else:
+		print()
+				
 	
 	checkMasterPassword = getpass.getpass("Porfavor, introduzca la clave maestra para entrar al gestor de contraseñas: ")
-	print()
 
 	checkMasterPasswordQuery = "SELECT * FROM masterpass;"
 	dbcursor.execute(checkMasterPasswordQuery)
