@@ -29,14 +29,20 @@ MurkyDBConnection = mysql.connector.connect(
 									user=MurkyDBUsername,
 									password=MurkyDBPassword,
 									host=MurkyDBHost,
-									port=MurkyDBPort,
-									database=MurkyDB,								
+									port=MurkyDBPort,	
 									)
 
 dbcursor = MurkyDBConnection.cursor()
 clearConsole
 
 if MurkyDBConnection:
+
+	# Comprobación de la existencia de la base de datos necesaria para realizar las operaciones de la aplicación:
+	createDB = "CREATE DATABASE IF NOT EXISTS "+ MurkyDB +";"
+	dbcursor.execute(createDB)
+
+	useDB = "USE "+ MurkyDB +";"
+	dbcursor.execute(useDB)
 
 	# Comprobación de la existencia de las tablas necesarias para realizar las operaciones de la aplicación:
 	createMasterPassTable = "CREATE TABLE IF NOT EXISTS masterpass (masterpass varchar(255))"
@@ -53,10 +59,11 @@ if MurkyDBConnection:
 	# Si no existe esta clave, se pedirá al usuario que la indique, mediante un paso por teclado y se almacenará en la tabla indicada:
 	if not checkMasterPassResult:
 		insertMasterPassQuery = "INSERT INTO masterpass (masterpass) VALUES (%s)"
-		insertMasterPass = getpass.getpass("No se ha introducido ningunha clave maestra. Por favor, introduce una a continuación: ")
+		insertMasterPass = getpass.getpass("No se ha introducido ninguna clave maestra. Por favor, introduce una a continuación: ")
 		masterPassToInsert = (insertMasterPass,)
 		dbcursor.execute(insertMasterPassQuery, masterPassToInsert)
 		MurkyDBConnection.commit()
+		print()
 
 	else:
 		print()
@@ -693,6 +700,10 @@ if MurkyDBConnection:
 	Bienvenido al Gestor de Contraseñas de MurkyCuns. MurkyVault 1.0.
 
 	-----------------------------------------------------------------------------------
+
+	Base de Datos seleccionada: """+ MurkyDB +"""
+
+	-----------------------------------------------------------------------------------
 	OPCIONES DE CONSULTA DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
 	-----------------------------------------------------------------------------------
 
@@ -707,7 +718,7 @@ if MurkyDBConnection:
 	OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
 	-----------------------------------------------------------------------------------
 
-	7) Eliminar la contraseña de un Sitio Web o Aplicación.
+	7) Eliminar el registro de un Sitio Web o Aplicación.
 	8) Modificar el registro de un Sitio Web o Aplicación.
 
 	-----------------------------------------------------------------------------------
@@ -721,6 +732,7 @@ if MurkyDBConnection:
 	0) Salir del Gestor de Contraseñas.
 
 	-----------------------------------------------------------------------------------
+	
 						   """)
 
 					option = input("Escoja la opción que quieres utilizar: ")
