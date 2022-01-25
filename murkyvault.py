@@ -20,6 +20,7 @@ print()
 # Paso de variables relacionadas con la conexión a la Base de Datos por teclado:
 MurkyDB = input("Introduzca el Nombre de la Base de Datos: ")
 MurkyDBHost = input("Introduzca la direción Host de la Base de Datos: ")
+MurkyDBPort = input("Introduzca el puerto de Conexión a la Base de Datos: ")
 MurkyDBUsername = input("Introduzca el Nombre de Usuario de la Base de Datos: ")
 MurkyDBPassword = getpass.getpass("Introduzca la Contraseña de la Base de Datos: ")
 
@@ -28,6 +29,7 @@ MurkyDBConnection = mysql.connector.connect(
 									user=MurkyDBUsername,
 									password=MurkyDBPassword,
 									host=MurkyDBHost,
+									port=MurkyDBPort,
 									database=MurkyDB,									
 									)
 
@@ -94,6 +96,8 @@ if MurkyDBConnection:
 				deleteRow()
 			if (option == "7"):
 				modifyRow()
+			if (option == "8"):
+				changeMasterPass()
 			if (option == "0"):
 				print()
 				print("Gracias por utilizar MurkyVault!")
@@ -581,7 +585,39 @@ if MurkyDBConnection:
 								clearConsole()
 								showSelectedMenu("0")
 
-				
+		# Función destinada a la modificación de la Contraseña Maestra del Usuario:
+		def changeMasterPass():
+			print()
+			print("Ha elegido la opción 8. Cambiar la Contraseña Maestra")
+			print()
+
+			# Se le pide al usuario confirmación de que conoce la anterior contraseña:
+			checkMasterPassword = input("Introduce la anterior Contraseña Maestra: ")
+
+			# Se comprueba que la anterior contraseña es la misma que ha introducido el usuario:
+			checkMasterPasswordQuery = "SELECT * FROM masterpass;"
+			dbcursor.execute(checkMasterPasswordQuery)
+			MasterResultado = dbcursor.fetchone()
+
+			for masterPasswordRow in MasterResultado:
+				pass
+
+			# Si ambas coinciden, se le pide al usuario una nueva Contraseña Maestra y esta se actualiza en la correspondiente tabla de su Base de Datos:
+			if (checkMasterPassword == masterPasswordRow):
+				newMasterPassword = input("Introduce la nueva Contraseña Maestra: ")
+
+				updateMasterPasswordQuery = "UPDATE masterpass SET masterpass = %s"
+				newMasterPassToInsert = (newMasterPassword,)
+				dbcursor.execute(updateMasterPasswordQuery, newMasterPassToInsert)
+				MurkyDBConnection.commit()
+
+				print()
+				print("La Contraseña Maestra se ha actualizado. Se pedirá en el próximo inicio de sesión.")
+				print()
+
+			else:
+				print("La anterior Contraseña no es correcta.")
+
 
 		# Se comprueba que la contraseña maestra introducida por el usuario coincide con la contraseña maestra almacenada en la Base de Datos:
 		if (checkMasterPassword == masterPasswordRow):
@@ -613,6 +649,12 @@ if MurkyDBConnection:
 	7) Modificar el registro de un Sitio Web o Aplicación.
 
 	-----------------------------------------------------------------------------------
+	OPCIONES DE MODIFICACIÓN DE PARÁMETROS DE LA CUENTA DEL USUARIO.
+	-----------------------------------------------------------------------------------
+
+	8) Modificar la Contraseña Maestra del Usuario.
+
+	-----------------------------------------------------------------------------------
 
 	0) Salir del Gestor de Contraseñas.
 
@@ -642,6 +684,9 @@ if MurkyDBConnection:
 					if (option == "7"):
 						clearConsole()
 						modifyRow()
+					if (option == "8"):
+						clearConsole()
+						changeMasterPass()
 					if (option == "0"):
 						clearConsole()
 						print()
