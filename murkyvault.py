@@ -30,7 +30,7 @@ MurkyDBConnection = mysql.connector.connect(
 									password=MurkyDBPassword,
 									host=MurkyDBHost,
 									port=MurkyDBPort,
-									database=MurkyDB,									
+									database=MurkyDB,								
 									)
 
 dbcursor = MurkyDBConnection.cursor()
@@ -42,7 +42,7 @@ if MurkyDBConnection:
 	createMasterPassTable = "CREATE TABLE IF NOT EXISTS masterpass (masterpass varchar(255))"
 	dbcursor.execute(createMasterPassTable)
 
-	createStoreTable = "CREATE TABLE IF NOT EXISTS murkypasswords (Site varchar(255), Email varchar(255), Username varchar(255), Passwd varchar(255))"
+	createStoreTable = "CREATE TABLE IF NOT EXISTS murkypasswords (Site varchar(255), Email varchar(255), Username varchar(255), Passwd varchar(255), Class varchar(255))"
 	dbcursor.execute(createStoreTable)
 
 	# Comprobación de la existencia de la Clave Maestra dentro de la tabla destinada a su almacenamiento:
@@ -93,10 +93,12 @@ if MurkyDBConnection:
 			if (option == "5"):
 				showRelatedToUsername()
 			if (option == "6"):
-				deleteRow()
+				showRelatedToClass()
 			if (option == "7"):
-				modifyRow()
+				deleteRow()
 			if (option == "8"):
+				modifyRow()
+			if (option == "9"):
 				changeMasterPass()
 			if (option == "0"):
 				print()
@@ -136,9 +138,10 @@ if MurkyDBConnection:
 			newEmail = input("Introduzca el email para asociar con este sitio web o aplicación: ")
 			newUsername = input("Introduzca el nombre de usuario para asociar con este sitio web o aplicación: ")
 			newPassword = getpass.getpass("Introduzca la nueva contraseña para este sitio web o aplicación: ")
+			newClass = input("Introduzca la el grupo al que pertenece esta contraseña: ")
 
 			# Se comprueban que todas las variables existen, no se permiten entradas vacías:
-			if (newPlace and newEmail and newUsername and newPassword):
+			if (newPlace and newEmail and newUsername and newPassword and newClass):
 				print()
 				print("Todos los parámetros se han introducido correctamente!")
 
@@ -146,7 +149,7 @@ if MurkyDBConnection:
 				encodingPassword(newPassword)
 
 				# Se define la consulta de MySQL con los valores guardados en las variables que ha indicado el usuario:
-				insertContraseña = ("INSERT INTO murkypasswords (Site, Email, Username, Passwd) VALUES (%s, %s, %s, %s)", (newPlace, newEmail, newUsername, encodingPassword.variable))
+				insertContraseña = ("INSERT INTO murkypasswords (Site, Email, Username, Passwd, Class) VALUES (%s, %s, %s, %s, %s)", (newPlace, newEmail, newUsername, encodingPassword.variable, newClass))
 				
 				# Ejecución y comprobación de que los valores hayan entrado a la tabla indicada y que esta se actualice:
 				dbcursor.execute( * insertContraseña)
@@ -197,14 +200,14 @@ if MurkyDBConnection:
 			if resultado:
 
 				# Opciones de "styling" del resultado de las consultas mediante tablas:
-				printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"]
+				printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"]
 
 				for fila in resultado:
 
 					# Se desencriptan los valores que contienen las contraseñas del usuario llamando a la función destinada a ello y se muestran los datos por pantalla:
 					decodingRow(fila[3])
 
-					printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+					printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 				print(printTable)
 
@@ -246,13 +249,13 @@ if MurkyDBConnection:
 				# Si el resultado existe, se estiliza la tabla, se desencripta la contraseña y se muestra por pantalla, al igual que en la función showPasswords():
 				if resultado:
 
-					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"] 
 
 					for fila in resultado:
 
 						decodingRow(fila[3])
 
-						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 					print(printTable)
 
@@ -302,13 +305,13 @@ if MurkyDBConnection:
 
 				if resultado:
 
-					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"]
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"]
 
 					for fila in resultado:
 
 						decodingRow(fila[3])
 
-						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 					print(printTable)
 
@@ -358,13 +361,13 @@ if MurkyDBConnection:
 
 				if resultado:
 
-					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"] 
 
 					for fila in resultado:
 
 						decodingRow(fila[3])
 						
-						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 					print(printTable)
 
@@ -398,10 +401,67 @@ if MurkyDBConnection:
 				print()
 				print("No se han introducido todos los parámetros, no se admiten entradas vacías...")
 
+		# Función destinada a mostrar todas las contraseñas que se asocien con un Grupo concreto:
+		def showRelatedToClass():
+			print()
+			print("Ha elegido la opción 6. Consultar todas las contraseñas asociadas a un Grupo")
+			print()
+
+			# Al igual que en la función showRelatedToSite() se pide al usuario que introduzaca el Grupo del que desea conocer las contraseñas, se realiza la consulta,
+			# se estiliza la tabla, se desencriptan las contraseñas y se imprime por pantalla.
+			customClass = input("¿De qué Grupo quieres conocer la contraseñas? ")
+
+			if (customClass):
+				showTable = "SELECT * FROM murkypasswords WHERE Class = %s"
+				dbcursor.execute(showTable, (customClass,))
+				resultado = dbcursor.fetchall()
+
+				if resultado:
+
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"] 
+
+					for fila in resultado:
+
+						decodingRow(fila[3])
+						
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
+
+					print(printTable)
+
+					printTable.clear_rows()
+
+					print()
+
+					# Repetición de característica. Consultar el comentario de la función addPassword().
+					anotherTry = input("Quieres consultar las contraseñas asociadas a otro Grupo?	Si / No: ")
+
+					if (anotherTry == "Si" or anotherTry == "si"):
+						clearConsole()
+						showSelectedMenu("6")
+
+					elif (anotherTry == "No" or anotherTry == "no"):
+						anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+						if (anotherOption == "Si" or anotherOption == "si"):
+							clearConsole()
+							showMenu()
+
+						else:
+							clearConsole()
+							showSelectedMenu("0")
+
+				else:
+					print()
+					print("No se han encontrado resultados asociados a este Nombre de Usuario")
+
+			else:
+				print()
+				print("No se han introducido todos los parámetros, no se admiten entradas vacías...")
+
 		# Función destinada al Borrado de una fila de contraseñas con sus respectivos campos indicada por el Sitio Web o Aplicación:
 		def deleteRow():
 			print()
-			print("Ha elegido la opción 6. Eliminar una contraseña de un sitio Web o Aplicación")
+			print("Ha elegido la opción 7. Eliminar una contraseña de un sitio Web o Aplicación")
 			print()
 
 			# Se le pide al usuario que indique como identificador principal el Sitio Web o Aplicación del que quiere eliminar sus contraseñas:
@@ -419,13 +479,13 @@ if MurkyDBConnection:
 					print("El Sitio Web o Aplicación de nombre: '" + customPlace + "' contiene los siguientes campos: ")
 					print()
 
-					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"] 
 
 					for fila in resultado:
 
 						decodingRow(fila[3])
 
-						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 					print(printTable)
 
@@ -451,7 +511,7 @@ if MurkyDBConnection:
 
 						if (anotherTry == "Si" or anotherTry == "si"):
 							clearConsole()
-							showSelectedMenu("6")
+							showSelectedMenu("7")
 
 						elif (anotherTry == "No" or anotherTry == "no"):
 							anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -488,7 +548,7 @@ if MurkyDBConnection:
 		# Función destinada a la modificación de los campos de una fila indicada mediante el Sitio Web o App como identificador:
 		def modifyRow():
 			print()
-			print("Ha elegido la opción 6. Modificar el registro de un sitio Web o Aplicación")
+			print("Ha elegido la opción 8. Modificar el registro de un sitio Web o Aplicación")
 			print()
 
 			customPlace = input("¿De qué Sitio Web o Aplicación quieres modificar el registro? ")
@@ -505,13 +565,13 @@ if MurkyDBConnection:
 					print("El Sitio Web o Aplicación de nombre: '" + customPlace + "' contiene los siguientes campos: ")
 					print()
 
-					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña"] 
+					printTable.field_names = ["Web o Aplicación", "Correo Electrónico", "Nombre de Usuario", "Contraseña", "Grupo"] 
 
 					for fila in resultado:
 
 						decodingRow(fila[3])
 
-						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable])
+						printTable.add_row([fila[0], fila[1], fila[2], decodingRow.variable, fila[4]])
 
 					print(printTable)
 
@@ -533,10 +593,11 @@ if MurkyDBConnection:
 						newEmail = input("Correo Electrónico: ")
 						newUsername = input("Nombre de Usuario: ")
 						newPassword = getpass.getpass("Contraseña: ")
+						newClass = input("Grupo: ")
 
 						encodingPassword(newPassword)
 
-						modifyQuery = ("UPDATE murkypasswords SET Site = %s, Email = %s, Username = %s, Passwd = %s WHERE Site = %s", (newPlace, newEmail, newUsername, encodingPassword.variable, customPlace))
+						modifyQuery = ("UPDATE murkypasswords SET Site = %s, Email = %s, Username = %s, Passwd = %s, Class = %s WHERE Site = %s", (newPlace, newEmail, newUsername, encodingPassword.variable, newClass, customPlace))
 				
 						# Ejecución y comprobación de que los valores hayan entrado a la Base de Datos:
 						dbcursor.execute( * modifyQuery)
@@ -551,7 +612,7 @@ if MurkyDBConnection:
 						# Repetición de característica. Consultar el comentario de la función addPassword().
 						if (anotherTry == "Si" or anotherTry == "si"):
 							clearConsole()
-							showSelectedMenu("7")
+							showSelectedMenu("8")
 
 						elif (anotherTry == "No" or anotherTry == "no"):
 							anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -572,7 +633,7 @@ if MurkyDBConnection:
 
 						if (anotherTry == "Si" or anotherTry == "si"):
 							clearConsole()
-							showSelectedMenu("f")
+							showSelectedMenu("7")
 
 						elif (anotherTry == "No" or anotherTry == "no"):
 							anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -588,7 +649,7 @@ if MurkyDBConnection:
 		# Función destinada a la modificación de la Contraseña Maestra del Usuario:
 		def changeMasterPass():
 			print()
-			print("Ha elegido la opción 8. Cambiar la Contraseña Maestra")
+			print("Ha elegido la opción 9. Cambiar la Contraseña Maestra")
 			print()
 
 			# Se le pide al usuario confirmación de que conoce la anterior contraseña:
@@ -638,21 +699,22 @@ if MurkyDBConnection:
 	1) Ingresar una nueva contraseña.
 	2) Consultar todas las contraseñas existentes en la Base de Datos.
 	3) Consultar la contraseña de un Sitio web o Aplicación.
-	4) Consultar todos los sitios web o aplicaciones asociadas a un correo electrónico.
-	5) Consultar todos los sitios web o aplicaciones asociadas a un nombre de usuario.
+	4) Consultar todos los Sitios web o Aplicaciones asociadas a un Correo Electrónico.
+	5) Consultar todos los Sitios web o Aplicaciones asociadas a un Nombre de Usuario.
+	6) Consultar todos los Sitios Web o Aplicaciones asociadas a un Grupo.
 
 	-----------------------------------------------------------------------------------
 	OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
 	-----------------------------------------------------------------------------------
 
-	6) Eliminar la contraseña de un Sitio Web o Aplicación.
-	7) Modificar el registro de un Sitio Web o Aplicación.
+	7) Eliminar la contraseña de un Sitio Web o Aplicación.
+	8) Modificar el registro de un Sitio Web o Aplicación.
 
 	-----------------------------------------------------------------------------------
 	OPCIONES DE MODIFICACIÓN DE PARÁMETROS DE LA CUENTA DEL USUARIO.
 	-----------------------------------------------------------------------------------
 
-	8) Modificar la Contraseña Maestra del Usuario.
+	9) Modificar la Contraseña Maestra del Usuario.
 
 	-----------------------------------------------------------------------------------
 
@@ -680,11 +742,14 @@ if MurkyDBConnection:
 						showRelatedToUsername()
 					if (option == "6"):
 						clearConsole()
-						deleteRow()
+						showRelatedToClass()
 					if (option == "7"):
 						clearConsole()
-						modifyRow()
+						deleteRow()
 					if (option == "8"):
+						clearConsole()
+						modifyRow()
+					if (option == "9"):
 						clearConsole()
 						changeMasterPass()
 					if (option == "0"):
