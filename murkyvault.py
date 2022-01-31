@@ -101,12 +101,20 @@ if MurkyDBConnection:
 				showRelatedToUsername()
 			if (option == "6"):
 				showRelatedToClass()
-			if (option == "7"):
+			if (option == "11"):
 				deleteRow()
-			if (option == "8"):
+			if (option == "12"):
 				modifyRow()
-			if (option == "9"):
+			if (option == "13"):
 				changeMasterPass()
+			if (option == "7"):
+				showAllSites()
+			if (option == "8"):
+				showAllEmails()
+			if (option == "9"):
+				showAllUsernames()
+			if (option == "10"):
+				showAllClasses()
 			if (option == "0"):
 				print()
 				print("Gracias por utilizar MurkyVault!")
@@ -465,10 +473,162 @@ if MurkyDBConnection:
 				print()
 				print("No se han introducido todos los parámetros, no se admiten entradas vacías...")
 
+		# Función destinada al listado de todos los Sitios Web o Aplicaciones disponibles para ser consultados:
+		def showAllSites():
+			print()
+			print("Ha elegido la opción 10. Mostrar todos los Sitios Web y Aplicaciones disponibles.")
+			print()
+
+			# Se realiza una consulta escogiendo un único valor si este se repite a lo largo de la tabla, se ejecuta y se muestran los valores:
+			showSites = "SELECT DISTINCT Site FROM murkypasswords"
+			dbcursor.execute(showSites)
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+
+				printTable.field_names = ["Sitios Web y Aplicaciones"] 
+
+				for fila in resultado:
+
+					printTable.add_row([fila[0]])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				# Repetición de característica. Consultar el comentario de la función addPassword().
+				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+				if (anotherOption == "Si" or anotherOption == "si"):
+					clearConsole()
+					showMenu()
+
+				else:
+					clearConsole()
+					showSelectedMenu("0")
+
+		# Función destinada al listado de todos los Emails disponibles para ser consultados:
+		def showAllEmails():
+			print()
+			print("Ha elegido la opción 11. Mostrar todos los Correos Electrónicos disponibles.")
+			print()
+
+			# Se realiza una consulta escogiendo un único valor si este se repite a lo largo de la tabla, se ejecuta y se muestran los valores:
+			showEmails = "SELECT DISTINCT Email FROM murkypasswords"
+			dbcursor.execute(showEmails)
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+
+				printTable.field_names = ["Correos Electrónicos"] 
+
+				for fila in resultado:
+
+					printTable.add_row([fila[0]])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				# Repetición de característica. Consultar el comentario de la función addPassword().
+				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+				if (anotherOption == "Si" or anotherOption == "si"):
+					clearConsole()
+					showMenu()
+
+				else:
+					clearConsole()
+					showSelectedMenu("0")
+
+		# Función destinada al listado de todos los Nombres de Usuario disponibles para ser consultados:
+		def showAllUsernames():
+			print()
+			print("Ha elegido la opción 12. Mostrar todos los Nombres de Usuario disponibles.")
+			print()
+
+			# Se realiza una consulta escogiendo un único valor si este se repite a lo largo de la tabla, se ejecuta y se muestran los valores:
+			showUsernames = "SELECT DISTINCT Username FROM murkypasswords"
+			dbcursor.execute(showUsernames)
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+
+				printTable.field_names = ["Nombres de Usuario"] 
+
+				for fila in resultado:
+
+					printTable.add_row([fila[0]])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				# Repetición de característica. Consultar el comentario de la función addPassword().
+				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+				if (anotherOption == "Si" or anotherOption == "si"):
+					clearConsole()
+					showMenu()
+
+				else:
+					clearConsole()
+					showSelectedMenu("0")
+
+		# Función destinada al listado de todos los Usuarios disponibles para ser consultados:
+		def showAllClasses():
+			print()
+			print("Ha elegido la opción 13. Mostrar todos los Grupos disponibles.")
+			print()
+
+			# Se realiza una consulta escogiendo un único valor si este se repite a lo largo de la tabla, se ejecuta y se muestran los valores:
+			showClasses = "SELECT DISTINCT Class FROM murkypasswords"
+			dbcursor.execute(showClasses)
+			resultado = dbcursor.fetchall()
+
+			if resultado:
+
+				print()
+
+				printTable.field_names = ["Grupos"] 
+
+				for fila in resultado:
+
+					printTable.add_row([fila[0]])
+
+				print(printTable)
+
+				printTable.clear_rows()
+
+				print()
+
+				# Repetición de característica. Consultar el comentario de la función addPassword().
+				anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
+
+				if (anotherOption == "Si" or anotherOption == "si"):
+					clearConsole()
+					showMenu()
+
+				else:
+					clearConsole()
+					showSelectedMenu("0")
+
 		# Función destinada al Borrado de una fila de contraseñas con sus respectivos campos indicada por el Sitio Web o Aplicación:
 		def deleteRow():
 			print()
-			print("Ha elegido la opción 7. Eliminar una contraseña de un sitio Web o Aplicación")
+			print("Ha elegido la opción 11. Eliminar una contraseña de un sitio Web o Aplicación.")
 			print()
 
 			# Se le pide al usuario que indique como identificador principal el Sitio Web o Aplicación del que quiere eliminar sus contraseñas:
@@ -518,7 +678,7 @@ if MurkyDBConnection:
 
 						if (anotherTry == "Si" or anotherTry == "si"):
 							clearConsole()
-							showSelectedMenu("7")
+							showSelectedMenu("11")
 
 						elif (anotherTry == "No" or anotherTry == "no"):
 							anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -555,7 +715,7 @@ if MurkyDBConnection:
 		# Función destinada a la modificación de los campos de una fila indicada mediante el Sitio Web o App como identificador:
 		def modifyRow():
 			print()
-			print("Ha elegido la opción 8. Modificar el registro de un sitio Web o Aplicación")
+			print("Ha elegido la opción 12. Modificar el registro de un sitio Web o Aplicación")
 			print()
 
 			customPlace = input("¿De qué Sitio Web o Aplicación quieres modificar el registro? ")
@@ -619,7 +779,7 @@ if MurkyDBConnection:
 						# Repetición de característica. Consultar el comentario de la función addPassword().
 						if (anotherTry == "Si" or anotherTry == "si"):
 							clearConsole()
-							showSelectedMenu("8")
+							showSelectedMenu("12")
 
 						elif (anotherTry == "No" or anotherTry == "no"):
 							anotherOption = input("Quieres escoger otra opción del menú de selección?	Si / No: ")
@@ -656,7 +816,7 @@ if MurkyDBConnection:
 		# Función destinada a la modificación de la Contraseña Maestra del Usuario:
 		def changeMasterPass():
 			print()
-			print("Ha elegido la opción 9. Cambiar la Contraseña Maestra")
+			print("Ha elegido la opción 13. Cambiar la Contraseña Maestra")
 			print()
 
 			# Se le pide al usuario confirmación de que conoce la anterior contraseña:
@@ -695,47 +855,56 @@ if MurkyDBConnection:
 			def showMenu():
 				while True:
 					print("""
-	-----------------------------------------------------------------------------------
 
-	Bienvenido al Gestor de Contraseñas de MurkyCuns. MurkyVault 1.0.
+	        * Bienvenido al Gestor de Contraseñas de MurkyCuns. MurkyVault 1.0. *
 
-	-----------------------------------------------------------------------------------
+	-> Base de Datos en uso: """+MurkyDB+"""
+	-> Nombre de Usuario: """+MurkyDBUsername+"""
 
-	Base de Datos seleccionada: """+ MurkyDB +"""
+	+-------------------------------------------------------------------------------------+
+	| OPCIONES DE CONSULTA DE CAMPOS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.      |
+	+-------------------------------------------------------------------------------------+
+	|                                                                                     |
+	| 1) Ingresar una nueva contraseña.                                                   |
+	| 2) Consultar todas las contraseñas existentes en la Base de Datos.                  |
+	| 3) Consultar la contraseña de un Sitio web o Aplicación.                            |
+	| 4) Consultar todos los Sitios web o Aplicaciones asociadas a un Correo Electrónico. |
+	| 5) Consultar todos los Sitios web o Aplicaciones asociadas a un Nombre de Usuario.  |
+	| 6) Consultar todos los Sitios Web o Aplicaciones asociadas a un Grupo.              |
+	|                                                                                     |
+	+-------------------------------------------------------------------------------------|
+	| OPCIONES DE CONSULTA DE COLUMNAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.    |
+	+-------------------------------------------------------------------------------------|
+	|                                                                                     |
+	| 7) Consultar todos los Sitios Web o Aplicacíones disponibles.                       |
+	| 8) Consultar todos los Correos Electrónicos disponibles.                            |
+	| 9) Consultar todos los Nombres de Usuario disponibles.                              |
+	| 10) Consultar todos los Grupos disponibles.                                         |
+	|                                                                                     |
+	+-------------------------------------------------------------------------------------+
+	| OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.  |
+	+-------------------------------------------------------------------------------------+
+	|                                                                                     |
+	| 11) Eliminar el registro de un Sitio Web o Aplicación.                              |
+	| 12) Modificar el registro de un Sitio Web o Aplicación.                             |
+	|                                                                                     |
+	+-------------------------------------------------------------------------------------+
+	| OPCIONES DE MODIFICACIÓN DE PARÁMETROS DE LA CUENTA DEL USUARIO.                    |
+	+-------------------------------------------------------------------------------------+
+	|                                                                                     |
+	| 13) Modificar la Contraseña Maestra del Usuario.                                    |
+	|                                                                                     |
+	+-------------------------------------------------------------------------------------+
+	|                                                                                     |
+	| 0) Salir del Gestor de Contraseñas.                                                 |
+	|                                                                                     |
+	+-------------------------------------------------------------------------------------+
 
-	-----------------------------------------------------------------------------------
-	OPCIONES DE CONSULTA DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
-	-----------------------------------------------------------------------------------
-
-	1) Ingresar una nueva contraseña.
-	2) Consultar todas las contraseñas existentes en la Base de Datos.
-	3) Consultar la contraseña de un Sitio web o Aplicación.
-	4) Consultar todos los Sitios web o Aplicaciones asociadas a un Correo Electrónico.
-	5) Consultar todos los Sitios web o Aplicaciones asociadas a un Nombre de Usuario.
-	6) Consultar todos los Sitios Web o Aplicaciones asociadas a un Grupo.
-
-	-----------------------------------------------------------------------------------
-	OPCIONES DE MODIFICACIÓN DE TABLAS DE LA BASE DE DATOS DE CONTRASEÑAS DEL USUARIO.
-	-----------------------------------------------------------------------------------
-
-	7) Eliminar el registro de un Sitio Web o Aplicación.
-	8) Modificar el registro de un Sitio Web o Aplicación.
-
-	-----------------------------------------------------------------------------------
-	OPCIONES DE MODIFICACIÓN DE PARÁMETROS DE LA CUENTA DEL USUARIO.
-	-----------------------------------------------------------------------------------
-
-	9) Modificar la Contraseña Maestra del Usuario.
-
-	-----------------------------------------------------------------------------------
-
-	0) Salir del Gestor de Contraseñas.
-
-	-----------------------------------------------------------------------------------
+	             * MURKY STUDIOS SL – 2022 | TODOS LOS DERECHOS RESERVADOS *             
 	
 						   """)
 
-					option = input("Escoja la opción que quieres utilizar: ")
+					option = input("	Escoja la opción que quieres utilizar: ")
 
 					if (option == "1"):
 						clearConsole()
@@ -755,15 +924,27 @@ if MurkyDBConnection:
 					if (option == "6"):
 						clearConsole()
 						showRelatedToClass()
-					if (option == "7"):
+					if (option == "11"):
 						clearConsole()
 						deleteRow()
-					if (option == "8"):
+					if (option == "12"):
 						clearConsole()
 						modifyRow()
-					if (option == "9"):
+					if (option == "13"):
 						clearConsole()
 						changeMasterPass()
+					if (option == "7"):
+						clearConsole()
+						showAllSites()
+					if (option == "8"):
+						clearConsole()
+						showAllEmails()
+					if (option == "9"):
+						clearConsole()
+						showAllUsernames()
+					if (option == "10"):
+						clearConsole()
+						showAllClasses()
 					if (option == "0"):
 						clearConsole()
 						print()
