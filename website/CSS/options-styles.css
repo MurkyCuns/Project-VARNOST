@@ -1,0 +1,219 @@
+@font-face {
+	font-family: "Maison Neue Bold";
+	src: url("../fonts/Maison Neue/MaisonNeue-Bold.otf");
+}
+
+@font-face {
+	font-family: "Maison Neue Book";
+	src: url("../fonts/Maison Neue/MaisonNeue-Book.otf");
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #000	;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+
+/* INICIO HEADER STYLES */
+header {
+	grid-column: 1 / 13;
+}
+
+#header-logo-container {
+	grid-column:  1 / 5;
+	background-color: black;
+	grid-row: 1 / 2;
+	text-align: left;
+}
+
+#header-logo {
+	width: 125px;
+	padding-left: 100px;
+	padding-top: 20px;
+	position: absolute;
+}
+
+#nav-container {
+	grid-column:  5 / 9;
+	background-color: #000;
+	grid-row: 1 / 2;
+	padding-top: 40px;
+}
+
+#nav-menu-list {
+	text-align: center;
+}
+
+.nav-menu-item {
+	display: inline-block;
+	text-decoration: none;
+	text-align: center;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-family: "Maison Neue Book";
+	font-size: 20px;
+	color: #fff;
+}
+
+a:link {
+	text-decoration: none;
+	color: white;
+}
+
+a:visited {
+	text-decoration: none;
+	color: white;
+}
+
+.nav-menu-item:hover {
+	text-decoration: none;
+	color: rgb(255, 211, 0);
+}
+
+.current {
+	color: #fff;
+	border-bottom: 1px solid rgb(255, 211, 0);
+}
+
+#session-container {
+	grid-column:  9 / 13;
+	grid-row: 1 / 2;
+	background-color: black;
+	padding-right: 100px;
+	text-align: right;
+	z-index: 0;
+	margin-top: -40px;
+}
+
+#login-container {
+	color: #fff;
+	font-family: "Maison Neue Book";
+	font-size: 20px;
+	background-color: #000;
+	border: 0px;
+}
+
+span .login-user {
+	color: red;
+	font-family: "Maison Neue Book";
+	font-size: 20px;
+}
+
+.login-access {
+	color: #fff;
+	font-family: "Maison Neue Book";
+	font-size: 20px;
+}
+
+.login-access:hover {
+	color: rgb(255, 211, 0);
+	font-family: "Maison Neue Book";
+	font-size: 20px;
+}
+
+/* FIN HEADER STYLES */
+
+#main-container {
+	grid-column: 1 / 13;
+	background-color: #000;
+	color: #fff;
+	padding-top: 100px;
+}
+
+#new-table-option-container {
+	grid-column: 1 / 13;
+	text-align: center;
+	background-color: #000;
+	padding-left: 125px;
+	padding-right: 125px;
+	padding-bottom: 25px;
+
+}
+
+.container {
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    display:block;
+}
+.container div {
+    display:inline-block;
+    position:relative;
+    float:left;
+}
+
+#new-table-option-container-2 {
+	grid-column: 1 / 13;
+	text-align: left;
+	background-color: #000;
+	padding-left: 125px;
+	padding-right: 125px;
+	padding-bottom: 50px;
+}
+
+#new-table-option-container-3 {
+	grid-column: 1 / 13;
+	text-align: left;
+	background-color: #000;
+	padding-left: 125px;
+	padding-right: 125px;
+	padding-bottom: 50px;
+}
+
+.option-quote {
+	color: #fff;
+	font-family: "Maison Neue Bold";
+	text-align: center;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	font-size: 75px;
+	border: 0px;
+	background-color: #000;
+}
+
+.label-quote {
+	color: #fff;
+	font-family: "Maison Neue Bold";
+	text-align: center;
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+	font-size: 75px;
+	border: 0px;
+	background-color: #000;
+}
+
+.option-separator {
+	color: red;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.option-quote:hover {
+	color: #000;
+	-webkit-text-stroke: 1.15px red;
+	font-family: "Maison Neue Bold";
+	font-size: 75px;
+	background-color: #000;
+}
+
+/* INICIO FOOTER STYLES */
+
+#footer-container {
+	grid-column: 1/13;
+	background-color: #000;
+	text-align: center;
+	padding-top: 100px;
+	padding-bottom: 25px;
+}
+
+#footer-logo {
+	width: 125px;
+}
+
+/* FIN FOOTER STYLES */
+
