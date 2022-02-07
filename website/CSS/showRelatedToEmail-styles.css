@@ -127,6 +127,15 @@ span .login-user {
 
 /* FIN HEADER STYLES */
 
+.selectedSite {
+	color: #000;
+	-webkit-text-stroke: 1.15px red;
+	font-family: "Maison Neue Bold";
+	font-size: 75px;
+	background-color: #000;
+	font-size: 100px;
+}
+
 #main-container {
 	grid-column: 1 / 13;
 	background-color: #000;
@@ -253,9 +262,166 @@ span .login-user {
 	margin: 5px;
 }
 
+.selectedEmail {
+	color: #000;
+	-webkit-text-stroke: 1.15px red;
+	font-family: "Maison Neue Bold";
+	font-size: 75px;
+	background-color: #000;
+	font-size: 100px;
+}
+
 #newDataForm {
 	padding-bottom: 50px;
 }
+
+/* INICIO CONFIRMATION STYLES */
+
+.form-input-quote {
+	color: #fff;
+	font-family: "Maison Neue Bold";
+	font-size: 100px;
+	padding-left: 125px;
+	padding-right: 125px;
+	padding-bottom: 50px;
+	padding-top: 125px;
+	text-align: center;
+}
+
+.form-input-col {
+	background-color: #000;
+	padding-left: 50px;
+	padding-right: 50px;
+	color: #fff;
+	height: 100px;
+	border: 1px solid red;
+	border-radius: 50px;
+	margin: 10px;
+	margin-left: 0px;
+	font-family: "Maison Neue Bold";
+	font-size: 50px;
+}
+
+.form-input-col:focus {
+	outline: none;
+	border: 1px solid #fff;
+}
+
+#send-cols-button {
+	width: 25%;
+	background-color: #000;
+	color: #fff;
+	border: 1px solid red;
+	border-radius: 50px;
+	height: 100px;
+	font-family: "Maison Neue Bold";
+	font-size: 50px;
+	text-align: center;
+	grid-column: 6 / 13;
+
+}
+
+#send-cols-button:hover {
+	width: 25%;
+	background-color: red;
+	color: #fff;
+	border: 1px solid red;
+	border-radius: 50px;
+	height: 100px;
+	font-family: "Maison Neue Bold";
+	font-size: 50px;
+	grid-column: 6 / 13;
+
+}
+
+#send-back-button {
+	width: 25%;
+	background-color: #000;
+	color: #fff;
+	border: 1px solid red;
+	border-radius: 50px;
+	height: 100px;
+	font-family: "Maison Neue Bold";
+	font-size: 35px;
+	text-align: center;
+	grid-column: 6 / 13;
+	margin-top: 50px;
+
+}
+
+#send-back-button:hover {
+	width: 25%;
+	background-color: red;
+	color: #fff;
+	border: 1px solid red;
+	border-radius: 50px;
+	height: 100px;
+	font-family: "Maison Neue Bold";
+	font-size: 35px;
+	grid-column: 6 / 13;
+	margin-top: 50px;
+
+}
+
+.confirmButton {
+	text-align: center;
+	width: 45%;
+	margin: 5px;
+	padding: 25px;
+	font-family: "Maison Neue Book";
+	font-size: 25px;
+	color: #fff;
+	background-color: #000;
+	border: 1px solid red;
+	border-radius: 50px;
+}
+
+.confirmButton:hover {
+	text-align: center;
+	width: 45%;
+	margin: 5px;
+	padding: 25px;
+	font-family: "Maison Neue Book";
+	font-size: 25px;
+	color: #fff;
+	background-color: #1DB954;
+	border: 1px solid #1DB954;
+	border-radius: 50px;
+}
+
+.denyButton {
+	text-align: center;
+	width: 45%;
+	margin: 5px;
+	padding: 25px;
+	font-family: "Maison Neue Book";
+	font-size: 25px;
+	color: #fff;
+	background-color: #000;
+	border: 1px solid red;
+	border-radius: 50px;
+}
+
+.denyButton:hover {
+	text-align: center;
+	width: 45%;
+	margin: 5px;
+	padding: 25px;
+	font-family: "Maison Neue Book";
+	font-size: 25px;
+	color: #fff;
+	background-color: red;
+	border: 1px solid red;
+	border-radius: 50px;
+}
+
+#confirmButtonContainer {
+	text-align: center;
+}
+
+
+
+/* FIN CONFIRMATION STYLES */
 
 /* INICIO FOOTER STYLES */
 

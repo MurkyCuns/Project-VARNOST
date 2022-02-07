@@ -75,13 +75,13 @@
 					<span class="label-quote">Filtrado de campos indicando:</span>
 				</div>
 				<div id='new-table-option-container-2'>
-					<input type='submit' class='option-quote' name='showAllPasswords' value="	-> Sitios Web o Aplicaciones">
+					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Sitios Web o Aplicaciones">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Correos Electrónicos">
+					<input type='submit' class='option-quote' name='showRelatedToEmail' value="	-> Correos Electrónicos">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Nombres de Usuario">
+					<input type='submit' class='option-quote' name='showRelatedToUsername' value="	-> Nombres de Usuario">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Grupos Asociados">
+					<input type='submit' class='option-quote' name='showRelatedToClass' value="	-> Grupos Asociados">
 				</div>
 				<div id='new-table-option-container'><hr class="option-separator"></div>
 				<div id='new-table-option-container-3'>
@@ -112,7 +112,7 @@
 				<div id='new-table-option-container'>
 					<input type='submit' class='option-quote' name='addPassword' value="Modificar la contraseña maestra">
 					<br>
-					<input type='submit' class='option-quote' name='addPassword' value="Cambiar credenciales de sesión">
+					<input type='submit' class='option-quote' name='backToIndex' value="Cambiar credenciales de sesión">
 				</div>
 				
 			</form>
