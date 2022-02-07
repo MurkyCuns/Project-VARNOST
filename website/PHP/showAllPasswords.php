@@ -73,13 +73,14 @@
 
 					if ($select_result) {
 						echo "<div id='tableName-container'>Todas las contraseñas</div>";
+						echo "<hr class='separator'>";
 						echo "<table id='main-table'>";
 						echo "<tr>
 							<td class='column-field'>Web o App</td>
 							<td class='column-field'>Correo Electrónico</td>
 							<td class='column-field'>Usuario</td>
 							<td class='column-field'>Contraseña</td>
-							<td class='column-field'>Grupo Associado</td>
+							<td class='column-field'>Grupo Asociado</td>
 						</tr>";
 
 		    				while ($rowArray = mysqli_fetch_array($select_result)) {
