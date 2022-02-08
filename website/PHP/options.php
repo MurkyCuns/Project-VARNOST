@@ -88,20 +88,20 @@
 					<span class="label-quote">Listado de columnas disponibles:</span>
 				</div>
 				<div id='new-table-option-container-3'>
-					<input type='submit' class='option-quote' name='showAllPasswords' value="	-> Sitios Web o Aplicaciones">
+					<input type='submit' class='option-quote' name='showAllSites' value="	-> Sitios Web o Aplicaciones">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Correos Electrónicos">
+					<input type='submit' class='option-quote' name='showAllEmails' value="	-> Correos Electrónicos">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Nombres de Usuario">
+					<input type='submit' class='option-quote' name='showAllUsernames' value="	-> Nombres de Usuario">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Grupos Asociados">
+					<input type='submit' class='option-quote' name='showAllClasses' value="	-> Grupos Asociados">
 				</div>
 				<div id='new-table-option-container'><hr class="option-separator"></div>
 				<div id='new-table-option-container-2'>
 					<span class="label-quote">Modificación de registros:</span>
 				</div>
 				<div id='new-table-option-container-2'>
-					<input type='submit' class='option-quote' name='showAllPasswords' value="	-> Eliminar un registro">
+					<input type='submit' class='option-quote' name='deleteRow' value="	-> Eliminar un registro">
 					<br>
 					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Modificar un registro">
 				</div>

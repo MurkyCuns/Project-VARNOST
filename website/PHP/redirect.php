@@ -43,4 +43,30 @@ if (isset($_POST['showRelatedToClass'])) {
 	exit();
 }
 
+if (isset($_POST['showAllSites'])) {
+	header("Location: ../PHP/showAllSites.php", TRUE, 301);
+	exit();
+}
+
+if (isset($_POST['showAllEmails'])) {
+	header("Location: ../PHP/showAllEmails.php", TRUE, 301);
+	exit();
+}
+
+if (isset($_POST['showAllUsernames'])) {
+	header("Location: ../PHP/showAllUsernames.php", TRUE, 301);
+	exit();
+}
+
+if (isset($_POST['showAllClasses'])) {
+	header("Location: ../PHP/showAllClasses.php", TRUE, 301);
+	exit();
+}
+
+if (isset($_POST['deleteRow'])) {
+	$_SESSION['display'] = 0;
+	header("Location: ../PHP/deleteRow.php", TRUE, 301);
+	exit();
+}
+
 ?>
