@@ -69,4 +69,10 @@ if (isset($_POST['deleteRow'])) {
 	exit();
 }
 
+if (isset($_POST['modifyRow'])) {
+	$_SESSION['display'] = 0;
+	header("Location: ../PHP/modifyRow.php", TRUE, 301);
+	exit();
+}
+
 ?>

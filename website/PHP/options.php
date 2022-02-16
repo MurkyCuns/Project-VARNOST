@@ -103,14 +103,14 @@
 				<div id='new-table-option-container-2'>
 					<input type='submit' class='option-quote' name='deleteRow' value="	-> Eliminar un registro">
 					<br>
-					<input type='submit' class='option-quote' name='showRelatedToSite' value="	-> Modificar un registro">
+					<input type='submit' class='option-quote' name='modifyRow' value="	-> Modificar un registro">
 				</div>
 
 				</div>
 				<div id='new-table-option-container'><hr class="option-separator"></div>
 
 				<div id='new-table-option-container'>
-					<input type='submit' class='option-quote' name='addPassword' value="Modificar la contraseña maestra">
+					<!-- <input type='submit' class='option-quote' name='addPassword' value="Modificar la contraseña maestra"> -->
 					<br>
 					<input type='submit' class='option-quote' name='backToIndex' value="Cambiar credenciales de sesión">
 				</div>
